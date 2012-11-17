@@ -64,13 +64,28 @@ disp(length(notes));
 
 %generating triplets
 for i=1: length(truenotes)
-	%triplets{i} = getTriplet(truenotes(i),i);
-	disp(getTriplet(truenotes(i),i));
+	triplets{i} = getTriplet(truenotes(i),i);
+	%disp(getTriplet(truenotes(i),i));
 
 endfor
 
 
-%disp(triplets);
+%writing sheet
+name = strsplit(wavname,"/"){1}
+sheetname = strcat("sheet-",name,".txt");
+disp(sheetname);
+[sheetfile,msg] = fopen(sheetname,'w');
+disp(msg);
+
+if is_valid_file_id(sheetfile)
+	for i=1: length(triplets)
+		fdisp(sheetname,triplets{i});
+	endfor
+	fclose(sheetfile);
+	disp("audio file converted successfully");
+else
+	disp("error creating sheet file");
+endif
 
 
 endfunction
