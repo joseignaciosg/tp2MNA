@@ -29,7 +29,7 @@ function ans = getTriplet(note, index)
 	endswitch	
 
 	%determining octave
-	fundamental = 32.750;
+	fundamental = 16.375;
 	octave = floor( note / fundamental )  ;
 	ans = strcat(ans,int2str(octave));
 

@@ -1,9 +1,9 @@
 function ans = getNote(triplet)
 
 	fundamental = 32.750;
-	octave = triplet{1}(3);
+	octave = triplet(3);
 	note = strtrunc(triplet,2);
-	switch(aux)
+	switch(note)
         case {'C-'}
                 ans = 0;
         case {'Cs'}
@@ -29,6 +29,9 @@ function ans = getNote(triplet)
 	case {'B-'}
 		ans = 11;
 	endswitch
+
+	ans = fundamental * 2^(octave+(ans/12));
+
 	
 
 endfunction

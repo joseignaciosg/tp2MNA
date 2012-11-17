@@ -17,7 +17,7 @@ function ans = getTriplet(note, index)
 	case {6}
 		ans = 'Fs';
 	case {7}
-		ans = 'C-';
+		ans = 'G-';
 	case {8}
 		ans = 'Ab';
 	case {9}
@@ -29,7 +29,8 @@ function ans = getTriplet(note, index)
 	endswitch	
 
 	%determining octave
-	octave = ceil( note / 262 ) + 3 ;
+	fundamental = 16.375;
+	octave = floor( note / fundamental )  ;
 	ans = strcat(ans,int2str(octave));
 
 	

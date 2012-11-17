@@ -1,58 +1,49 @@
-function toSheet(wavname)
+function toSheet2(wavname,Tm)
 
 
 %reading the audio file
-[y,fm] = wavread(wavname);
+[y,fs] = wavread(wavname);
 
-%obtaining the most suitable 2 factor
-%factors = [2,2²,2³,2⁴,2⁵,2⁶,2⁷,2⁸,2⁹,2^10,2^11];
-%nsamples = isClosest(fm,factors);
 nsamples = length(y);
 disp('number of samples:'),disp(nsamples);
 
-
-%obtaining the sampling frequency
-%f = nsamples/30e-3; 
-%disp('sampling frequency'),disp(f);
-
-%ploting samples
-%x = y(1:nsamples);
-%plot(x);:
-
-%obtaining the transformed vector
-X = fft(y);
-X = abs(X);
-X = fftshift(X);
-
-
 %sampling period
-Tm = 1/fm;
+Ts = 1/fs;
 
 %file fragment size
-fragsize = 30e-3;
+fragsize = Tm;
 
 %triplets quantity
-N = ceil( ( Tm * length(y) ) / fragsize);
+fileduration = Ts * nsamples;
+N = floor( fileduration / fragsize );
 
 %determing step
-step = ceil(nsamples/N);
+step = floor( nsamples / N );
 
 %obtaing notes frequencies
 k=1;
 for i=1 :step: nsamples-step
-	notes(k) = max(X(i:i+step));
-	k++;
+	audio = y(i:i+step);
+	X = fftshift(abs(fft(audio)));
+	notes(k++) = max(X);
 endfor
+audio = y(i:nsamples);
+X = fftshift(abs(fft(audio)));
+notes(k) = max(X);
+
 
 %obtaining the equal temperament scale
-fundamental = 32.750;
-for i=0: 100
+fundamental = 32.750/2;
+oct = 0;
+for i=0 : 300
 	if mod(i,12) == 0
-		fundamental *= 2;
+		oct +=1;
 	endif
-	scale(i+1) = fundamental * 2^(mod(i,12)/12);
+	scale(i+1) = fundamental * 2^(oct + mod(i,12)/12);
 endfor
 %disp (scale);
+
+plot(notes);
 
 %finding notes matches
 for i=1: length(notes)
@@ -61,6 +52,7 @@ endfor
 disp('notes quantity:');
 disp(length(notes));
 
+%plot(truenotes);
 
 %generating triplets
 for i=1: length(truenotes)
@@ -75,7 +67,7 @@ names = strsplit(wavname,"/");
 name = names{length(names)};
 sheetname = strcat("sheet-",name,".txt");
 disp(sheetname);
-[sheetfile,msg] = fopen(sheetname,'w');
+[sheetfile,msg] = fopen(sheetname,'w+');
 disp(msg);
 
 if is_valid_file_id(sheetfile)

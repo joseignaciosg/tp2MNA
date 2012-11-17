@@ -1,12 +1,12 @@
-function toSheet(wavname)
+function toSheet(wavname,Tm)
 
 
 %reading the audio file
-[y,fm] = wavread(wavname);
+[y,fs] = wavread(wavname);
 
 %obtaining the most suitable 2 factor
 %factors = [2,2²,2³,2⁴,2⁵,2⁶,2⁷,2⁸,2⁹,2^10,2^11];
-%nsamples = isClosest(fm,factors);
+%nsamples = isClosest(fs,factors);
 nsamples = length(y);
 disp('number of samples:'),disp(nsamples);
 
@@ -26,13 +26,13 @@ X = fftshift(X);
 
 
 %sampling period
-Tm = 1/fm;
+Ts = 1/fs;
 
 %file fragment size
-fragsize = 30e-3;
+fragsize = Ts;
 
 %triplets quantity
-N = ceil( ( Tm * length(y) ) / fragsize);
+N = ceil( ( Ts * length(y) ) / fragsize);
 
 %determing step
 step = ceil(nsamples/N);

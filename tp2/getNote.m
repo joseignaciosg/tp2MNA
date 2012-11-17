@@ -1,37 +1,35 @@
-function ans = getNote(triplet)
+function ret = getNote(triplet)
 
-	fundamental = 32.750;
-	octave = triplet(3);
+	fundamental = 16.375;
+	oct = triplet(3);
 	note = strtrunc(triplet,2);
 	switch(note)
         case {'C-'}
-                ans = 0;
+                aux = 0;
         case {'Cs'}
-                ans = 1;
+                aux = 1;
         case {'D-'}
-                ans = 2;
+                aux = 2;
         case {'Eb'}
-                ans = 3;
+                aux = 3;
         case {'E-'}
-                ans = 4;
+                aux = 4;
         case {'F-'}
-                ans = 5;
+                aux = 5;
         case {'Fs'}
-                ans = 6;
+                aux = 6;
       	case {'G-'}
-		ans = 7;
+		aux = 7;
 	case {'Ab'}
-		ans = 8;
+		aux = 8;
 	case {'A-'}
-		ans = 9;
+		aux = 9;
 	case {'Bb'}
-		ans = 10;
+		aux = 10;
 	case {'B-'}
-		ans = 11;
+		aux = 11;
 	endswitch
-
-	ans = fundamental * 2^(octave+ans/12);
-
-	
+	oct = str2num(oct);
+	ret = fundamental * 2^(oct+(aux/12));
 
 endfunction
