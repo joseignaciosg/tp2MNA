@@ -45,7 +45,7 @@ for i=1 :step: nsamples-step
 endfor
 
 %obtaining the equal temperament scale
-fundamental = 32.750;
+fundamental = 65.5;
 for i=0: 100
 	if mod(i,12) == 0
 		fundamental *= 2;
