@@ -22,10 +22,11 @@ step = floor( nsamples / N );
 
 %obtaing notes frequencies
 k=1;
-for i=1 :step: nsamples-step
+for i=1 :step:nsamples-step
 	audio = y(i:i+step);
-	X = fftshift(abs(fft(audio)));
-	notes(k++) = max(X);
+	%X = fftshift(abs(fft(audio)));
+	X = abs(fft(audio));
+	notes(k++) = max(X);	
 endfor
 audio = y(i:nsamples);
 X = fftshift(abs(fft(audio)));
@@ -33,8 +34,8 @@ notes(k) = max(X);
 
 
 %obtaining the equal temperament scale
-fundamental = 32.750/2;
-oct = 0;
+fundamental = 16.375;
+oct = -1;
 for i=0 : 300
 	if mod(i,12) == 0
 		oct +=1;
@@ -52,7 +53,7 @@ endfor
 disp('notes quantity:');
 disp(length(notes));
 
-%plot(truenotes);
+plot(truenotes);
 
 %generating triplets
 for i=1: length(truenotes)

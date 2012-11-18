@@ -29,13 +29,14 @@ X = fftshift(X);
 Ts = 1/fs;
 
 %file fragment size
-fragsize = Ts;
+fragsize = Tm;
 
 %triplets quantity
-N = ceil( ( Ts * length(y) ) / fragsize);
+fileduration = Ts * nsamples;
+N = floor( fileduration / fragsize );
 
 %determing step
-step = ceil(nsamples/N);
+step = floor(nsamples/N);
 
 %obtaing notes frequencies
 k=1;
@@ -43,16 +44,13 @@ for i=1 :step: nsamples-step
 	notes(k) = max(X(i:i+step));
 	k++;
 endfor
+notes(k) = max(X(i:nsamples));
 
 %obtaining the equal temperament scale
-fundamental = 32.750;
-for i=0: 100
-	if mod(i,12) == 0
-		fundamental *= 2;
-	endif
-	scale(i+1) = fundamental * 2^(mod(i,12)/12);
-endfor
+scale = getScale();
 %disp (scale);
+
+%plot(notes);
 
 %finding notes matches
 for i=1: length(notes)
@@ -61,12 +59,11 @@ endfor
 disp('notes quantity:');
 disp(length(notes));
 
+plot(truenotes);
 
 %generating triplets
 for i=1: length(truenotes)
-	triplets{i} = getTriplet(truenotes(i),i);
-	%disp(getTriplet(truenotes(i),i));
-
+	triplets{i} = getTriplet(truenotes(i));
 endfor
 
 

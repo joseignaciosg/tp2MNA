@@ -14,7 +14,7 @@ while (! feof(fid) )
 endwhile
 
 
-%recovering notes frequencies
+%recovering frequencies of the notes
 for i=1: length(triplets)
 	frecs(i) = getNote(triplets{i});
 endfor
@@ -26,16 +26,21 @@ fs = 1/Tm;
 nsamples = length(triplets);
 f = ((1:nsamples) )/nsamples /(1/fs);
 
-plot(f,frecs);
+plot(ifftshift(frecs));
 
 %plot(ifft(ifftshift(frecs)));
 
 %antitransformating frequencies
-notes = ifft(frecs);
+notes = ifft(ifftshift(frecs));
+
+%normalizing
+%notes = notes/norm(notes,'inf');
+
+%plot(f,notes)
 
 n = 431790/nsamples ;
 
-%fix to have se same quantity of nytes as before
+%fix to have the same quantity of nytes as before
 k = 1;
 for i=1 : nsamples
 	for j=k : n*i	
@@ -47,14 +52,12 @@ N = 431790;
 
 f= (1:N) / N / Tm;
 
-%plot(f,salida)
-
-length(salida)
+plot(f,salida)
 
 
 %creating the wavifft(frecs)
 wavwrite(salida', 11025, 'test.wav');
-
+%wavwrite(notes', 1/30e-3, 'test.wav');
 %plot(notes);
 
 endfunction
