@@ -78,12 +78,12 @@ xpb = xpb(to+(1:N));
 xpa = xpa(to+(1:N));
 idx = 1:4096;
 t = 1/fm*(idx-1);
-%figure(3)
-%plot(t,x(idx),t,xpb(idx))
+figure(3)
+plot(t,x(idx),t,xpb(idx))
 axis tight
 
-%figure(4)
-%plot(t,x(idx),t,xpa(idx))
+figure(4)
+plot(t,x(idx),t,xpa(idx))
 axis tight
 
 X = fftshift(fft(x));
