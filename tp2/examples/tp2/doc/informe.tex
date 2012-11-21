@@ -1,0 +1,596 @@
+\documentclass[journal, monochrome]{IEEEtran}
+\usepackage[utf8]{inputenc}
+\usepackage[monochrome]{color}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyvrb}
+\usepackage{dsfont}
+\usepackage{subfigure}
+\usepackage{natbib}
+\usepackage{moreverb}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{caption}
+
+\lstloadlanguages{Octave}
+\captionsetup[lstlisting]{ singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
+\lstset{
+  basicstyle=\footnotesize\ttfamily,
+  %numbers=left,
+  numberstyle=\tiny,
+  %stepnumber=2,
+  numbersep=5pt,
+  tabsize=8,
+  extendedchars=true,
+  breaklines=true,
+  framexleftmargin=17pt,
+  framexrightmargin=5pt,
+  showstringspaces=false
+}
+
+\ifCLASSINFOpdf
+\else
+\fi
+% graphicx was written by David Carlisle and Sebastian Rahtz. It is
+% required if you want graphics, photos, etc. graphicx.sty is already
+% installed on most LaTeX systems. The latest version and documentation can
+% be obtained at: 
+% http://www.ctan.org/tex-archive/macros/latex/required/graphics/
+% Another good source of documentation is "Using Imported Graphics in
+% LaTeX2e" by Keith Reckdahl which can be found as epslatex.ps or
+% epslatex.pdf at: http://www.ctan.org/tex-archive/info/
+%
+% latex, and pdflatex in dvi mode, support graphics in encapsulated
+% postscript (.eps) format. pdflatex in pdf mode supports graphics
+% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
+% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
+% not a bitmapped formats (.jpeg, .png). IEEE frowns on bitmapped formats
+% which can result in "jaggedy"/blurry rendering of lines and letters as
+% well as large increases in file sizes.
+%
+% You can find documentation about the pdfTeX application at:
+% http://www.tug.org/applications/pdftex
+
+
+
+
+
+% *** MATH PACKAGES ***
+%
+%\usepackage[cmex10]{amsmath}
+% A popular package from the American Mathematical Society that provides
+% many useful and powerful commands for dealing with mathematics. If using
+% it, be sure to load this package with the cmex10 option to ensure that
+% only type 1 fonts will utilized at all point sizes. Without this option,
+% it is possible that some math symbols, particularly those within
+% footnotes, will be rendered in bitmap form which will result in a
+% document that can not be IEEE Xplore compliant!
+%
+% Also, note that the amsmath package sets \interdisplaylinepenalty to 10000
+% thus preventing page breaks from occurring within multiline equations. Use:
+%\interdisplaylinepenalty=2500
+% after loading amsmath to restore such page breaks as IEEEtran.cls normally
+% does. amsmath.sty is already installed on most LaTeX systems. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/amslatex/math/
+
+
+
+
+
+% *** SPECIALIZED LIST PACKAGES ***
+%
+%\usepackage{algorithmic}
+% algorithmic.sty was written by Peter Williams and Rogerio Brito.
+% This package provides an algorithmic environment fo describing algorithms.
+% You can use the algorithmic environment in-text or within a figure
+% environment to provide for a floating algorithm. Do NOT use the algorithm
+% floating environment provided by algorithm.sty (by the same authors) or
+% algorithm2e.sty (by Christophe Fiorio) as IEEE does not use dedicated
+% algorithm float types and packages that provide these will not provide
+% correct IEEE style captions. The latest version and documentation of
+% algorithmic.sty can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithms/
+% There is also a support site at:
+% http://algorithms.berlios.de/index.html
+% Also of interest may be the (relatively newer and more customizable)
+% algorithmicx.sty package by Szasz Janos:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithmicx/
+
+
+
+
+% *** ALIGNMENT PACKAGES ***
+%
+%\usepackage{array}
+% Frank Mittelbach's and David Carlisle's array.sty patches and improves
+% the standard LaTeX2e array and tabular environments to provide better
+% appearance and additional user controls. As the default LaTeX2e table
+% generation code is lacking to the point of almost being broken with
+% respect to the quality of the end results, all users are strongly
+% advised to use an enhanced (at the very least that provided by array.sty)
+% set of table tools. array.sty is already installed on most systems. The
+% latest version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/tools/
+
+
+%\usepackage{mdwmath}
+%\usepackage{mdwtab}
+% Also highly recommended is Mark Wooding's extremely powerful MDW tools,
+% especially mdwmath.sty and mdwtab.sty which are used to format equations
+% and tables, respectively. The MDWtools set is already installed on most
+% LaTeX systems. The lastest version and documentation is available at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/mdwtools/
+
+
+% IEEEtran contains the IEEEeqnarray family of commands that can be used to
+% generate multiline equations as well as matrices, tables, etc., of high
+% quality.
+
+
+%\usepackage{eqparbox}
+% Also of notable interest is Scott Pakin's eqparbox package for creating
+% (automatically sized) equal width boxes - aka "natural width parboxes".
+% Available at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/eqparbox/
+
+
+
+
+
+% *** SUBFIGURE PACKAGES ***
+%\usepackage[tight,footnotesize]{subfigure}
+% subfigure.sty was written by Steven Douglas Cochran. This package makes it
+% easy to put subfigures in your figures. e.g., "Figure 1a and 1b". For IEEE
+% work, it is a good idea to load it with the tight package option to reduce
+% the amount of white space around the subfigures. subfigure.sty is already
+% installed on most LaTeX systems. The latest version and documentation can
+% be obtained at:
+% http://www.ctan.org/tex-archive/obsolete/macros/latex/contrib/subfigure/
+% subfigure.sty has been superceeded by subfig.sty.
+
+
+
+%\usepackage[caption=false]{caption}
+%\usepackage[font=footnotesize]{subfig}
+% subfig.sty, also written by Steven Douglas Cochran, is the modern
+% replacement for subfigure.sty. However, subfig.sty requires and
+% automatically loads Axel Sommerfeldt's caption.sty which will override
+% IEEEtran.cls handling of captions and this will result in nonIEEE style
+% figure/table captions. To prevent this problem, be sure and preload
+% caption.sty with its "caption=false" package option. This is will preserve
+% IEEEtran.cls handing of captions. Version 1.3 (2005/06/28) and later 
+% (recommended due to many improvements over 1.2) of subfig.sty supports
+% the caption=false option directly:
+%\usepackage[caption=false,font=footnotesize]{subfig}
+%
+% The latest version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/subfig/
+% The latest version and documentation of caption.sty can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/caption/
+
+
+
+
+% *** FLOAT PACKAGES ***
+%
+%\usepackage{fixltx2e}
+% fixltx2e, the successor to the earlier fix2col.sty, was written by
+% Frank Mittelbach and David Carlisle. This package corrects a few problems
+% in the LaTeX2e kernel, the most notable of which is that in current
+% LaTeX2e releases, the ordering of single and double column floats is not
+% guaranteed to be preserved. Thus, an unpatched LaTeX2e can allow a
+% single column figure to be placed prior to an earlier double column
+% figure. The latest version and documentation can be found at:
+% http://www.ctan.org/tex-archive/macros/latex/base/
+
+
+
+%\usepackage{stfloats}
+% stfloats.sty was written by Sigitas Tolusis. This package gives LaTeX2e
+% the ability to do double column floats at the bottom of the page as well
+% as the top. (e.g., "\begin{figure*}[!b]" is not normally possible in
+% LaTeX2e). It also provides a command:
+%\fnbelowfloat
+% to enable the placement of footnotes below bottom floats (the standard
+% LaTeX2e kernel puts them above bottom floats). This is an invasive package
+% which rewrites many portions of the LaTeX2e float routines. It may not work
+% with other packages that modify the LaTeX2e float routines. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/sttools/
+% Documentation is contained in the stfloats.sty comments as well as in the
+% presfull.pdf file. Do not use the stfloats baselinefloat ability as IEEE
+% does not allow \baselineskip to stretch. Authors submitting work to the
+% IEEE should note that IEEE rarely uses double column equations and
+% that authors should try to avoid such use. Do not be tempted to use the
+% cuted.sty or midfloat.sty packages (also by Sigitas Tolusis) as IEEE does
+% not format its papers in such ways.
+
+
+%\ifCLASSOPTIONcaptionsoff
+%  \usepackage[nomarkers]{endfloat}
+% \let\MYoriglatexcaption\caption
+% \renewcommand{\caption}[2][\relax]{\MYoriglatexcaption[#2]{#2}}
+%\fi
+% endfloat.sty was written by James Darrell McCauley and Jeff Goldberg.
+% This package may be useful when used in conjunction with IEEEtran.cls'
+% captionsoff option. Some IEEE journals/societies require that submissions
+% have lists of figures/tables at the end of the paper and that
+% figures/tables without any captions are placed on a page by themselves at
+% the end of the document. If needed, the draftcls IEEEtran class option or
+% \CLASSINPUTbaselinestretch interface can be used to increase the line
+% spacing as well. Be sure and use the nomarkers option of endfloat to
+% prevent endfloat from "marking" where the figures would have been placed
+% in the text. The two hack lines of code above are a slight modification of
+% that suggested by in the endfloat docs (section 8.3.1) to ensure that
+% the full captions always appear in the list of figures/tables - even if
+% the user used the short optional argument of \caption[]{}.
+% IEEE papers do not typically make use of \caption[]'s optional argument,
+% so this should not be an issue. A similar trick can be used to disable
+% captions of packages such as subfig.sty that lack options to turn off
+% the subcaptions:
+% For subfig.sty:
+% \let\MYorigsubfloat\subfloat
+% \renewcommand{\subfloat}[2][\relax]{\MYorigsubfloat[]{#2}}
+% For subfigure.sty:
+% \let\MYorigsubfigure\subfigure
+% \renewcommand{\subfigure}[2][\relax]{\MYorigsubfigure[]{#2}}
+% However, the above trick will not work if both optional arguments of
+% the \subfloat/subfig command are used. Furthermore, there needs to be a
+% description of each subfigure *somewhere* and endfloat does not add
+% subfigure captions to its list of figures. Thus, the best approach is to
+% avoid the use of subfigure captions (many IEEE journals avoid them anyway)
+% and instead reference/explain all the subfigures within the main caption.
+% The latest version of endfloat.sty and its documentation can obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/endfloat/
+%
+% The IEEEtran \ifCLASSOPTIONcaptionsoff conditional can also be used
+% later in the document, say, to conditionally put the References on a 
+% page by themselves.
+
+
+
+
+
+% *** PDF, URL AND HYPERLINK PACKAGES ***
+%
+%\usepackage{url}
+% url.sty was written by Donald Arseneau. It provides better support for
+% handling and breaking URLs. url.sty is already installed on most LaTeX
+% systems. The latest version can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/misc/
+% Read the url.sty source comments for usage information. Basically,
+% \url{my_url_here}.
+
+
+
+
+
+% *** Do not adjust lengths that control margins, column widths, etc. ***
+% *** Do not use packages that alter fonts (such as pslatex).         ***
+% There should be no need to do such things with IEEEtran.cls V1.6 and later.
+% (Unless specifically asked to do so by the journal or conference you plan
+% to submit to, of course. )
+
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+%
+% paper title
+% can use linebreaks \\ within to get better formatting as desired
+\title{Síntesis y reconocimiento de obras musicales}
+%
+%
+% author names and IEEE memberships
+% note positions of commas and nonbreaking spaces ( ~ ) LaTeX will not break
+% a structure at a ~ so this keeps an author's name from being broken across
+% two lines.
+% use \thanks{} to gain access to the first footnote area
+% a separate \thanks must be used for each paragraph as LaTeX2e's \thanks
+% was not built to handle multiple paragraphs
+%
+
+\author{\textbf{Autores:} Alejandro Magnorsky, Andrés Mata Suárez, Mariano Merchante \\[5px]
+        Instituto Tecnológico de Buenos Aires}
+        
+% note the % following the last \IEEEmembership and also \thanks - 
+% these prevent an unwanted space from occurring between the last author name
+% and the end of the author line. i.e., if you had this:
+% 
+% \author{....lastname \thanks{...} \thanks{...} }
+%                     ^------------^------------^----Do not want these spaces!
+%
+% a space would be appended to the last name and could cause every name on that
+% line to be shifted left slightly. This is one of those "LaTeX things". For
+% instance, "\textbf{A} \textbf{B}" will typeset as "A B" not "AB". To get
+% "AB" then you have to do: "\textbf{A}\textbf{B}"
+% \thanks is no different in this regard, so shield the last } of each \thanks
+% that ends a line with a % and do not let a space in before the next \thanks.
+% Spaces after \IEEEmembership other than the last one are OK (and needed) as
+% you are supposed to have spaces between the names. For what it is worth,
+% this is a minor point as most people would not even notice if the said evil
+% space somehow managed to creep in.
+
+
+
+% The paper headers
+%\markboth{Template para los informes de SS, 2011}
+%{Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for Journals}
+% The only time the second header will appear is for the odd numbered pages
+% after the title page when using the twoside option.
+% 
+% *** Note that you probably will NOT want to include the author's ***
+% *** name in the headers of peer review papers.                   ***
+% You can use \ifCLASSOPTIONpeerreview for conditional compilation here if
+% you desire.
+
+
+
+
+% If you want to put a publisher's ID mark on the page you can do it like
+% this:
+%\IEEEpubid{0000--0000/00\$00.00~\copyright~2007 IEEE}
+% Remember, if you use this you must call \IEEEpubidadjcol in the second
+% column for its text to clear the IEEEpubid mark.
+
+
+
+% use for special paper notices
+%\IEEEspecialpapernotice{(Invited Paper)}
+
+
+
+
+
+
+
+
+
+
+
+
+% make the title area
+\maketitle
+
+\renewcommand{\abstractname}{Resumen}
+
+
+\renewcommand{\IEEEkeywordsname}{Palabras clave}
+\renewcommand{\refname}{Referencias}
+\renewcommand{\tablename}{Tabla}
+
+\begin{abstract}
+\boldmath
+El análisis, la descomposición y creación digital de obras musicales mediante notas es un área de estudio actual muy importante con aplicaciones diversas, desde la generación procedural de música hasta creación manual de música comercial, o incluso la afinación de grabaciones a partir de una melodía esperada.  Se expone una metodología para reconocer notas a partir de archivos de sonido sin compresión y el método inverso, en el cual a partir de una secuencia de notas se construye un archivo de sonido. Se analizan los métodos y sus resultados, y se expone el código fuente para poder experimentar. 
+\end{abstract}
+% IEEEtran.cls defaults to using nonbold math in the Abstract.
+% This preserves the distinction between vectors and scalars. However,
+% if the journal you are submitting to favors bold math in the abstract,
+% then you can use LaTeX's standard command \boldmath at the very start
+% of the abstract to achieve this. Many IEEE journals frown on math
+% in the abstract anyway.
+
+% Note that keywords are not normally used for peerreview papers.
+\begin{IEEEkeywords}
+Archivo de sonido; Partitura; Transformada de Fourier; Frecuencia.
+\end{IEEEkeywords}
+
+
+
+
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+
+
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+\vspace{1cm}
+
+\section{Introducción}
+
+Existe mucho interés en el análisis de sonidos musicales. Desde el reconocimiento de las notas más significativas para fines tales como la generación de una partitura a partir de una canción, el cálculo de qué tan afinada está una grabación o incluso analizar qué escala se utiliza en cierta obra, hasta la sintetización de dichas notas para poder generar música a partir de sencillas partituras digitales. Se utilizará la escala conocida como de \emph{Temperamento Igual}, la cual divide la escala de frecuencias en fragmentos de doce niveles diferentes, mostrados en la Tabla \ref{table:Notas}. La relación de frecuencias entre notas sucesivas es siempre $ 2^\frac{1}{12} $. Cada fragmento de doce notas denota una octava, y es un múltiplo de la escala fundamental. \\
+
+La sección \ref{section:development} muestra principalmente el desarrollo del análisis, donde primero se muestra cómo analizar y reconstruir una secuencia de notas a partir de un archivo de sonido, y luego el análisis inverso, es decir, cómo construir un archivo de sonido a partir de una partitura digital. También se provee un método de reducción de ruido. \\
+
+Luego, en la seccion \ref{section:results} se muestran algunos resultados de los programas realizados con tres grabaciones distintas, se comparan y se encuentran interpretaciones de dichos resultados. \\
+
+Por último, la sección \ref{section:conclusions} ofrece conclusiones realizadas una vez obtenidos los resultados.
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|}
+\hline
+Notación Latina & Notación Inglesa \\
+\hline
+do & C\\
+\hline
+do \# & C \# \\
+\hline
+re& D\\
+\hline
+mi $\flat$ & E $\flat$ \\
+\hline
+mi & E\\
+\hline
+fa & F\\
+\hline
+fa \# & F\# \\
+\hline
+sol & G\\
+\hline
+la $\flat$  & A $\flat$\\
+\hline
+la & A\\
+\hline
+si $\flat$ & B $\flat$\\
+\hline
+si & B\\
+\hline
+\end{tabular}
+\caption{\label{table:Notas} Notas musicales}
+\end{table}
+
+\vspace{1cm}
+%-------------------------------------------------------------------------
+\section{Desarrollo}
+\label{section:development}
+\vspace{0.5cm}
+\subsection{Construcción de una partitura a partir de un archivo de sonido}
+\label{subsection:partitureToWav}
+El objetivo es la creación de un programa que, dado un archivo de sonido (.wav), genere una partitura. El código se divide en dos archivos o funciones, que son las que se detallan en la figuras \ref{lst:getFrequencies} y \ref{lst:writePartiture}. \\
+
+Una señal física, como la onda del sonido, puede ser representada mediante una función del tiempo continua. Así, un tono puro con frecuencia $f_{0}$ produce una onda de la forma:
+\begin{equation}
+x(t) = \sin(2 \pi f_{0}t)
+\label{equation:tone}
+\end{equation}
+La ecuación \eqref{equation:tone} es la representación en el tiempo del tono puro, pero también existe una representación en la frecuencia. La música está formadas por sucesiones y superposiciones de funciones de la forma de la ecuación \eqref{equation:tone}. En particular, si se considera el caso de tonos puros consecutivos, obteniendo la representación en frecuencia cada cierto intervalo de tiempo, se pueden conseguir todas las notas musicales que componen dicha música. Cabe mencionar que se trabaja con una discretización de la función continua que modela la música. \\
+
+Para obtener la representación de la música en frecuencia, es decir, el espectro de frecuencias, se puede utilizar la Transformada Discreta de Fourier para cada uno de los intervalos de la función original. La Transformada Discreta de Fourier \citep{mathews} se define como:
+\begin{equation}
+X_{k} = \sum_{n=0}^{N-1}x_{n}e^{-i2\pi\frac{k}{N}n}
+\end{equation}
+donde $x_{n}$ es la función periódica que representa al tono puro y $N$ es la cantidad de muestras de dicho tono.\\
+
+Para comenzar, la función \texttt{getFrequencies} (figura \ref{lst:getFrequencies}) recibe la ruta del archivo de sonido que se desea procesar. Utilizando la función de Octave, \texttt{wavread}, se obtiene el vector que representa la onda del sonido, $x$, junto a la frecuencia de muestro de dicha señal, $f_{s}$. Considerando intervalos de tiempo de $30 ms$, se divide a $x$ en vectores de $\frac{30}{1000}f_{s}$ elementos, ya que esa es la cantidad de muestreos del sonido que se realizan a lo largo de $30 ms$. Para cada uno de dichos vectores, se calcula la Transformada Discreta de Fourier usando la función que provee Octave, \texttt{fft}, la cual usa el algoritmo de la Transformada Rápida de Fourier. La ventaja de esto es que tiene $O(n\log n)$ en lugar de $O(n^{2})$. \\
+
+Cada vector $X$ que devuelve la función \texttt{fft}, pasa a ser la entrada para otra función llamada \texttt{fftshift}. El efecto de \texttt{fftshift} es mover los valores de $X$ para que queden centrados en torno a la frecuencia $0$. Finalmente, considerando los valores en que la frecuencia es positiva, es decir, la segunda mitad del vector $X$, se averigüa en qué valor de la frecuencia $X$ se maximiza. Ese valor es la frecuencia fundamental del intervalo considerado, que se guarda en el vector de frecuencias que devuelve la función en cuestión.\\
+
+Utilizando el vector de frecuencias generado a partir de la función \texttt{getFrequencies}, la función \texttt{writePartiture} (figura \ref{lst:writePartiture}) genera un vector de caracteres que representan los tripletes de cada una de las frecuencias.\\
+
+Cabe destacar que es necesario que tanto los métodos \texttt{frequencyToNote} (figura \ref{lst:frequencyToNote}) como \texttt{noteFromDistance} (figura \ref{lst:noteFromDistance}), utilizados directa e indirectamente por la función \texttt{writePartiture}, trabajen con cierto grado de error, tanto al momento de decidir el intervalo de frecuencias (octava de una nota) al cual pertenece una frecuencia dada, como también al calcular la distancia en medio tonos de cada nota respecto a un \textit{la} en la octava cuarta (\textit{A-4} en notación de tripletes). Esto se debe a la naturaleza aproximativa del proceso de obtención de las frecuencias de un archivo de sonido.\\
+
+
+\subsection{Construcción de un archivo de sonido a partir de una partitura}
+El camino inverso al proceso descripto en el inciso \ref{subsection:partitureToWav} no presenta demasiadas complicaciones. Dado un vector
+compuesto por $n$ tripletes, la función \texttt{readPartiture} (figura \ref{lst:readPartiture}) se encarga de transformar cada uno de ellos en la nota que les corresponda usando la función \texttt{noteToFrequency} (figura \ref{lst:noteToFrequency}).
+Una vez finalizado dicho procedimiento, se utiliza cada frecuencia $f_k$ para construir un vector de valores $\mathbf{v^{f_k}}$, en donde el componente $v^{f_k}_i$ de dicho vector corresponde al resultado de la siguiente ecuación:
+\begin{equation}
+v^{f_k}_i = \sin(2\pi t_i f_k)
+\end{equation}
+siendo $t_i$ el $i$-ésimo componente de un vector tiempo $t$ cuyos elementos van desde $0$ a $30 ms$ con pasos de $\tfrac{1}{f_s}$.
+
+Como resultado, se dispone de $n$ vectores $\mathbf{v^{f_k}}$ que son finalmente concatenados en uno único, listo para
+ser convertido a sonido mediante la función \texttt{wavwrite} que ofrece Octave.
+
+\subsection{Ruido}
+
+El archivo de sonido obtenido mediante el uso de \texttt{readPartiture} presenta cierto ruido entre tonos. El mismo es provocado por las discontinuidades entre los vectores $\mathbf{v^{f_k}}$ consecutivos. Por ese motivo, en la función \texttt{readPartiturev2} (figura \ref{lst:readPartiturev2}), se agrega al calculo original de $\mathbf{v^{f_k}}$, un desfase $\phi$: \\
+\begin{equation}
+\phi = \sum_{i=0}^{k-1} 2\pi f_{k}(t_{f}+\frac{1}{f_{s}})
+\end{equation}
+siendo $t_{f}$ la duración de un tono. De esta forma, $\mathbf{v^{f_k}}$ se obtiene calculando:
+\begin{equation}
+v^{f_k}_i = \sin(2\pi t_i f_k + \phi)
+\end{equation}
+
+Esto hace que la concatenación de los vectores $\mathbf{v^{f_k}}$ sea continua, eliminando así el ruido producido.
+
+
+\vspace{1cm}
+%-------------------------------------------------------------------------
+\section{Resultados}
+\label{section:results}
+\vspace{0.5cm}
+
+A continuación se analizan y comparan algunos archivos de música y los resultados luego de ejecutar los algoritmos desarrollados.  \\
+
+El primer archivo analizado es \emph{beet5\_np.wav}, el cual al reconocer las frecuencias, aparecen varios picos que distorsionan el resultado final. En los primeros segundos de la obra, \emph{getFrequencies} parece tener problemas, aunque luego parece estabilizarse y la melodía aproximada puede escucharse. Esto probablemente se deba a que la primera secuencia de notas son continuas, ya que casi no hay silencio entre ellas.  \\
+
+El segundo archivo es \emph{twnkl\_np.wav}, el cual luego de analizarlo ofrece resultados mucho mejores comparados al anterior. Es posible que esto se deba a la casi fija longitud de las notas y la acentuación de cada nota. Además, si bien esta canción tiene dos melodías simultáneas, éstas tienen los mismos tiempos, por lo que es más fácil reconocerlas. Contrario es el caso de la obra anterior, en la que se encuentran dos melodías con distintos tiempos y silencios, lo cual complica el reconocimiento considerablemente. \\ 
+
+Utilizando un programa externo llamado \emph{Guitar Pro} que permite generar música a partir de partituras o tablaturas, se realiza una versión reducida de la obra conocida como \emph{When the Saints go marching in}; se genera un archivo de sonido con la melodía aproximada. Dicha melodía es muy sencilla, con un timbre de piano digital. Luego, se ejecuta \emph{getFrequencies}, se lo convierte a partitura y utilizando \emph{readPartiturev2} se compara el resultado con el archivo original. Inicialmente, la secuencia de frecuencias reconocidas resultante posee varias distorsiones. Esto principalmente se debe a que el archivo de la melodía original no posee silencios y los tiempos de cada nota son muy reducidos. Es por esto que si se ejecuta sólo \emph{readPartiturev2} con la misma melodía pero descrita en tripletes de forma manual debería dar mejores resultados.
+
+\vspace{1cm}
+\section{Conclusiones}
+\label{section:conclusions}
+\vspace{0.5cm}
+
+Se proponen métodos para el reconocimiento de partituras a partir de grabaciones existentes y sintetización de sonidos musicales mediante una secuencia de tripletes. A su vez, se comparan los resultados y se propone un método de reducción de ruido. Por otro lado, existen posibles mejoras a los algoritmos propuestos, en particular \emph{readPartiturev2}. Dichas mejoras podrían ser la generación de notas con un timbre particular (y la sintetización de dichos timbres), o la posibilidad de definir el tiempo de una nota particular, hasta incluso poder generar varias notas de forma simultánea. De manera similar, se podría mejorar \emph{getFrequencies} agregandole la posibilidad de reconocer distintas melodías simultáneas, de forma que pueda generar una secuencia de tripletes por melodía o timbre reconocido. Sin embargo, estas mejoras están fuera del objetivo del trabajo y no fueron contempladas. Por último, más allá de la falta de dichas mejoras, los métodos desarrollados funcionan aproximadamente de la forma deseada, y son lo suficientemente sencillos como para considerarse una solución práctica y efectiva.
+
+%-------------------------------------------------------------------------
+
+\vspace{1cm}
+\begin{thebibliography}{1}
+\bibitem[Mathews y Fink(1992)]{mathews}
+	Mathews, John H.,
+	Fink, Kurtis D.,
+	``Numerical Methods Using MATLAB'',
+	Prentice Hall,
+	1999
+	
+\end{thebibliography}
+
+
+
+%-------------------------------------------------------------------------
+
+
+\begin{figure}
+	\lstinputlisting[label=lst:getFrequencies,caption=Implementación de la generación de la secuencia de frecuencias de un archivo de sonido.]{../src/getFrequencies.m}
+\end{figure}
+\begin{figure}
+	\lstinputlisting[label=lst:writePartiture,caption=Implementación de la escritura de una partitura dada una secuencia de frecuencias.]{../src/writePartiture.m}
+\end{figure}
+\begin{figure}
+	\lstinputlisting[label=lst:frequencyToNote,caption=Implementación de la conversión de una frecuencia en un triplete.]{../src/frequencyToNote.m}
+\end{figure}
+\begin{figure}
+	\lstinputlisting[label=lst:noteFromDistance,caption=Obtención de la nota a partir de su distancia con respecto a un \textit{la} en la octava cuarta.]{../src/noteFromDistance.m}
+\end{figure}
+
+
+\begin{figure}
+	\lstinputlisting[label=lst:readPartiture,caption=Implementación de la lectura de una partitura a partir de un conjunto de tripletes.]{../src/readPartiture.m}
+\end{figure}
+\begin{figure}
+	\lstinputlisting[label=lst:readPartiturev2,caption=Implementación mejorada de la lectura de una partitura a partir de un conjunto de tripletes.]{../src/readPartiturev2.m}
+\end{figure}
+\begin{figure}
+	\lstinputlisting[label=lst:noteToFrequency,caption=Implementación de la conversión de un triplete en una frecuencia.]{../src/noteToFrequency.m}
+\end{figure}
+
+
+
+
+
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+%\IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+%\IEEEtriggercmd{\enlargethispage{-5in}}
+
+% references section
+
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://www.ctan.org/tex-archive/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+%\bibliographystyle{IEEEtran}
+%\bibliographystyle{authordate}
+% argument is your BibTeX string definitions and bibliography database(s)
+%\bibliography{IEEEabrv,../bib/paper}
+%
+% <OR> manually copy in the resultant .bbl file
+% set second argument of \begin to the number of references
+% (used to reserve space for the reference number labels box)
+
+
+\end{document}
+
+
